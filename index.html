@@ -1,88 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
-<title>СвайпниЕду</title>
+<meta name="theme-color" content="#F2F3F5">
+<title>SwipeEat — свайпай продукты</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="app">
 
-  <!-- ---------- ВЕРХНЯЯ ПАНЕЛЬ ---------- -->
+  <!-- ================= TOPBAR ================= -->
   <header class="topbar">
     <div class="addr">
-      <b>улица Паперника, 9</b>
-      <svg viewBox="0 0 24 24" class="chev"><path d="M9 6l6 6-6 6"/></svg>
+      улица Паперника, 9
+      <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
     </div>
-    <button class="bell" id="btnInfo">
-      🔔<span class="dot" id="likeDot">0</span>
+    <button class="bell" aria-label="Уведомления">
+      🔔<span class="dot">4</span>
     </button>
   </header>
 
   <div class="subhead">
-    <span id="progress">Свайпай карточки</span>
+    <span id="progress">Просмотрено 0 из 0</span>
     <span class="pill" id="savedPill">Выгода 0 ₽</span>
   </div>
 
-  <!-- ---------- КОЛОДА КАРТОЧЕК ---------- -->
+  <div class="progbar"><i id="progFill"></i></div>
+
+  <!-- ================= DECK ================= -->
   <main class="deckwrap">
     <div id="deck"></div>
 
     <div class="empty" id="empty">
       <div class="emptyIco">🛍️</div>
-      <h2>Всё пересмотрел!</h2>
-      <p id="emptyTxt"></p>
+      <h2>Это все товары!</h2>
+      <p id="emptyTxt">В корзине 0 товаров</p>
       <button class="btn-green" id="restart">Смотреть заново</button>
     </div>
   </main>
 
-  <!-- ---------- КНОПКИ ---------- -->
+  <!-- ================= CONTROLS ================= -->
   <div class="controls">
-    <button class="cbtn no"   id="btnNo"   aria-label="Пропустить">
+    <button class="cbtn no" id="btnNo" aria-label="Не нравится">
       <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
+
     <button class="cbtn undo" id="btnUndo" aria-label="Вернуть">
-      <svg viewBox="0 0 24 24"><path d="M3 10h11a5 5 0 010 10h-3"/><path d="M7 6l-4 4 4 4"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M3 9h11a5 5 0 0 1 0 10H8"/><path d="M7 5L3 9l4 4"/></svg>
     </button>
-    <button class="cbtn yes"  id="btnYes"  aria-label="В корзину">
-      <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M6 6L5 2H2"/></svg>
+
+    <button class="cbtn yes" id="btnYes" aria-label="В корзину">
+      <svg viewBox="0 0 24 24">
+        <circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/>
+        <path d="M2 3h3l2.6 11.5h11L21 7H6"/>
+      </svg>
     </button>
   </div>
 
-  <!-- ---------- НИЖНИЙ ТАББАР ---------- -->
+  <!-- ================= TABBAR ================= -->
   <nav class="tabbar">
     <button class="tb active"><span>🍀</span>Главная</button>
-    <button class="tb"><span>🔳</span>Каталог</button>
+    <button class="tb"><span>🔲</span>Каталог</button>
+
     <button class="tb cart" id="openCart">
       <span class="cartico">🛒<i class="cnt" id="cartCnt">0</i></span>
       <b id="cartSum">0 ₽</b>
     </button>
-    <button class="tb"><span>🍊</span>Апельсин</button>
+
+    <button class="tb" id="btnInfo">
+      <span class="cartico">🍊<i class="cnt" id="likeDot">0</i></span>
+      Апельсин
+    </button>
+
     <button class="tb"><span>👤</span>Профиль</button>
   </nav>
 
 </div>
 
-<!-- ---------- ШТОРКА КОРЗИНЫ ---------- -->
+<!-- ================= SHEET ================= -->
 <div class="overlay" id="overlay"></div>
-<section class="sheet" id="sheet">
+
+<aside class="sheet" id="sheet">
   <div class="grab"></div>
+
   <div class="tabs">
-    <button class="tab active" data-tab="cart">Корзина</button>
-    <button class="tab" data-tab="reco">Подобрали для вас</button>
+    <button class="tab active" data-tab="cart">🛒 Корзина</button>
+    <button class="tab" data-tab="reco">✨ Вам понравится</button>
   </div>
+
   <div class="list" id="list"></div>
+
   <div class="checkout">
-    <div class="ttl">
-      <span>Итого</span>
-      <b id="total">0 ₽</b>
-    </div>
-    <button class="btn-green wide" id="btnPay">К оплате</button>
+    <div class="ttl">Итого <b id="total">0 ₽</b></div>
+    <button class="btn-green wide" id="btnPay">Оформить заказ</button>
   </div>
-</section>
+</aside>
+
+<!-- ================= FX LAYER ================= -->
+<div id="fx" aria-hidden="true"></div>
 
 <script src="products.js"></script>
 <script src="app.js"></script>
