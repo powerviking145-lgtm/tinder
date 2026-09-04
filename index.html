@@ -4,104 +4,758 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#F2F3F5">
-<title>SwipeEat — свайпай продукты</title>
-<link rel="stylesheet" href="style.css">
+<title>SwipeEat</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}:root{--green:#00923F;--green-l:#7BD389;--yellow:#FFDD2D;--red:#E4002B;--bg:#F2F3F5;--txt:#1A1A1A;--muted:#8E939E;--line:#EDEFF2;--spring:cubic-bezier(.2,1.35,.35,1);--ease:cubic-bezier(.2,.8,.2,1);}html,body{height:100%}body{background:var(--bg);color:var(--txt);font:16px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;overscroll-behavior:none;}svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.app{display:flex;flex-direction:column;height:100dvh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}.topbar{display:flex;align-items:center;gap:8px;padding:10px 16px 4px;flex:0 0 auto}.addr{display:flex;align-items:center;gap:2px;font-size:17px;font-weight:800;letter-spacing:-.3px}.chev{width:20px;height:20px}.bell{margin-left:auto;position:relative;background:none;border:0;font-size:22px;cursor:pointer;transition:transform .2s var(--spring)}.bell:active{transform:scale(.85) rotate(-12deg)}.dot{position:absolute;top:-4px;right:-6px;background:var(--red);color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px}.subhead{display:flex;align-items:center;gap:8px;padding:2px 16px 6px;font-size:13px;color:var(--muted)}.pill{margin-left:auto;background:#E7F6EC;color:var(--green);font-weight:800;font-size:12px;padding:4px 10px;border-radius:999px;transition:transform .3s var(--spring)}.pill.bump{animation:bump .45s var(--spring)}.progbar{height:3px;background:#E3E6EA;margin:0 16px 8px;border-radius:2px;overflow:hidden;flex:0 0 auto}.progbar i{display:block;height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--green-l));transition:width .55s var(--ease)}.deckwrap{position:relative;flex:1 1 auto;min-height:0;margin:0 14px;perspective:1400px}#deck{position:absolute;inset:0;transform-style:preserve-3d}.card{position:absolute;inset:0;background:#fff;border-radius:26px;box-shadow:0 12px 34px rgba(20,30,50,.14);display:flex;flex-direction:column;overflow:hidden;will-change:transform,opacity;touch-action:none;transform-origin:50% 90%;}.card[data-pos="1"]{transform:scale(.945) translateY(12px);opacity:.96}.card[data-pos="2"]{transform:scale(.89) translateY(24px);opacity:.9}.card.settle{transition:transform .5s var(--spring),opacity .4s var(--ease),box-shadow .3s}.card.snap{transition:transform .55s var(--spring)}.card.fly{transition:transform .42s cubic-bezier(.3,.1,.3,1),opacity .42s ease-out}.card.dragging{box-shadow:0 26px 54px rgba(20,30,50,.24)}.card.top.in{animation:cardIn .42s var(--spring) both}@keyframes cardIn{from{opacity:0;transform:scale(.9) translateY(26px)}to{opacity:1;transform:none}}.card.undoIn{animation:undoIn .5s var(--spring) both}@keyframes undoIn{from{transform:translateX(-115%) rotate(-22deg);opacity:0}to{transform:none;opacity:1}}.imgwrap{flex:1 1 auto;min-height:0;position:relative;display:grid;place-items:center;padding:10px}.ph{width:100%;height:100%;border-radius:18px;display:grid;place-items:center;overflow:hidden;position:relative}.ph::after{content:"";position:absolute;inset:-40%;pointer-events:none;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 48%,transparent 58%);transform:translateX(-130%);animation:shine 5s ease-in-out infinite}@keyframes shine{0%,55%{transform:translateX(-130%)}85%,100%{transform:translateX(130%)}}.ph img{width:100%;height:100%;object-fit:contain;animation:float 4.6s ease-in-out infinite}.emoji{font-size:min(30vh,190px);line-height:1;filter:drop-shadow(0 14px 18px rgba(0,0,0,.13));animation:float 4.6s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}.disc{position:absolute;top:14px;left:14px;background:var(--yellow);color:#1A1A1A;font-size:13px;font-weight:900;padding:5px 10px;border-radius:12px;z-index:3;animation:popIn .45s var(--spring) both .1s}.reco{position:absolute;top:14px;right:14px;background:var(--green);color:#fff;font-size:11px;font-weight:800;padding:6px 10px;border-radius:12px;z-index:3;animation:popIn .45s var(--spring) both .18s}@keyframes popIn{from{opacity:0;transform:scale(.5) translateY(-6px)}to{opacity:1;transform:none}}.tint{position:absolute;inset:0;z-index:4;opacity:0;pointer-events:none}.tint.l{background:linear-gradient(90deg,rgba(0,146,63,0),rgba(0,146,63,.34))}.tint.n{background:linear-gradient(270deg,rgba(228,0,43,0),rgba(228,0,43,.32))}.act{position:absolute;top:44%;width:92px;height:92px;border-radius:50%;display:grid;place-items:center;color:#fff;z-index:5;opacity:0;transform:scale(.35);pointer-events:none;box-shadow:0 10px 26px rgba(0,0,0,.22)}.act svg{width:42px;height:42px;stroke-width:2.6}.act.l{left:22px;background:var(--green)}.act.n{right:22px;background:var(--red)}.meta{flex:0 0 auto;padding:0 16px 16px}.rate{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;margin-bottom:6px}.rate .st{color:#FFC107;font-size:14px;display:inline-block;animation:twinkle 2.6s ease-in-out infinite}@keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(18deg)}}.rate .unit{color:var(--muted);font-weight:500;margin-left:auto;font-size:12px}.name{font-size:16px;font-weight:700;line-height:1.25;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.desc{font-size:12.5px;color:var(--muted);line-height:1.35;margin-bottom:10px;min-height:34px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.prow{display:flex;align-items:flex-end;gap:8px}.price{font-size:26px;font-weight:900;letter-spacing:-.8px;line-height:1}.price.sale{color:var(--red)}.price .kop{font-size:15px;font-weight:800}.old{font-size:13px;color:var(--muted);text-decoration:line-through;padding-bottom:2px}.addbtn{margin-left:auto;width:46px;height:46px;border-radius:16px;border:0;background:var(--green);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .22s var(--spring),background .2s}.addbtn:active{transform:scale(.82) rotate(90deg);background:var(--green-l)}.empty{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:26px;background:#fff;border-radius:26px}.empty.show{display:flex;animation:cardIn .45s var(--spring) both}.emptyIco{font-size:52px;animation:float 3s ease-in-out infinite}.empty h2{font-size:20px}.empty p{font-size:14px;color:var(--muted)}.btn-green{background:var(--green);color:#fff;border:0;border-radius:14px;padding:14px 24px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .2s var(--spring)}.btn-green:active{transform:scale(.94)}.btn-green.wide{width:100%}.controls{flex:0 0 auto;display:flex;justify-content:center;align-items:center;gap:20px;padding:16px 0 10px}.cbtn{position:relative;width:62px;height:62px;border-radius:50%;border:0;background:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:0 8px 22px rgba(20,30,50,.16);transition:transform .18s var(--spring),box-shadow .2s}.cbtn:active{transform:scale(.86)}.cbtn svg{width:26px;height:26px;transition:transform .2s var(--spring)}.cbtn.no{color:var(--red)}.cbtn.yes{background:var(--green);color:#fff;width:66px;height:66px;box-shadow:0 10px 26px rgba(0,146,63,.36)}.cbtn.yes::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(0,146,63,.42);animation:pulse 2.4s ease-out infinite}@keyframes pulse{to{box-shadow:0 0 0 24px rgba(0,146,63,0)}}.cbtn.undo{width:48px;height:48px;color:#FFA000}.cbtn.undo svg{width:20px;height:20px}.cbtn.undo:active svg{transform:rotate(-180deg)}.cbtn.kick{animation:kick .4s var(--spring)}@keyframes kick{0%{transform:scale(1)}35%{transform:scale(.84)}100%{transform:scale(1)}}.cbtn.hot{transform:scale(1.14)}.tabbar{flex:0 0 auto;display:flex;background:#fff;border-top:1px solid var(--line);padding:6px 4px 4px}.tb{flex:1;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--muted);cursor:pointer;font-weight:600;transition:transform .2s var(--spring)}.tb:active{transform:scale(.9)}.tb span{font-size:20px}.tb.active{color:var(--green)}.tb.cart b{font-size:10px;color:var(--green);font-weight:800}.cartico{position:relative;display:inline-block;transition:transform .3s var(--spring)}.cartico.jump{animation:jump .5s var(--spring)}@keyframes jump{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-10px) scale(1.2)}60%{transform:translateY(2px) scale(.94)}100%{transform:none}}.cnt{position:absolute;top:-4px;right:-10px;background:var(--red);color:#fff;font-style:normal;font-size:10px;font-weight:800;min-width:17px;height:17px;border-radius:9px;display:grid;place-items:center;padding:0 4px}.cnt.pop{animation:bump .5s var(--spring)}@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}#fx{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}.pt{position:fixed;font-size:20px;will-change:transform,opacity}.flyer{position:fixed;width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:30px;overflow:hidden;z-index:70;will-change:transform,opacity;box-shadow:0 8px 20px rgba(0,0,0,.2)}.flyer img{width:100%;height:100%;object-fit:contain}.ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:59;background:radial-gradient(circle,rgba(0,146,63,.28),rgba(0,146,63,0) 70%)}.overlay{position:fixed;inset:0;background:rgba(10,15,25,.45);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .3s var(--ease);z-index:20}.overlay.show{opacity:1;pointer-events:auto}.sheet{position:fixed;left:0;right:0;bottom:0;max-height:86dvh;background:#fff;z-index:21;border-radius:24px 24px 0 0;transform:translateY(103%);transition:transform .42s var(--spring);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -10px 40px rgba(10,15,25,.18)}.sheet.show{transform:translateY(0)}.grab{width:40px;height:4px;background:#D8DBE0;border-radius:2px;margin:9px auto 2px}.tabs{display:flex;gap:8px;padding:8px 14px 10px}.tab{flex:1;background:var(--bg);border:0;color:var(--muted);padding:11px;border-radius:14px;font-weight:700;font-size:13px;cursor:pointer;transition:.25s var(--ease)}.tab.active{background:var(--green);color:#fff;transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,146,63,.28)}.list{overflow:auto;padding:0 14px;-webkit-overflow-scrolling:touch;flex:1 1 auto}.row{display:flex;gap:11px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);animation:rowIn .4s var(--spring) both}@keyframes rowIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}.row.out{animation:rowOut .3s var(--ease) both}@keyframes rowOut{to{opacity:0;transform:translateX(-40px);height:0;padding:0;margin:0}}.thumb{width:54px;height:54px;border-radius:14px;flex:0 0 auto;display:grid;place-items:center;font-size:28px;overflow:hidden;background:var(--bg)}.thumb img{width:100%;height:100%;object-fit:contain}.rn{flex:1;min-width:0}.rn b{display:block;font-size:13px;font-weight:700;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.rn small{color:var(--muted);font-size:11px}.rp{font-weight:900;font-size:14px;white-space:nowrap}.qty{display:flex;align-items:center;gap:6px;background:var(--bg);border-radius:12px;padding:3px}.qty button{width:28px;height:28px;border-radius:9px;border:0;background:#fff;color:var(--green);font-size:17px;font-weight:800;cursor:pointer;line-height:1;transition:transform .18s var(--spring)}.qty button:active{transform:scale(.8)}.qty span{min-width:16px;text-align:center;font-weight:800;font-size:13px;transition:transform .25s var(--spring)}.qty span.pop{animation:bump .4s var(--spring)}.mini{background:var(--green);color:#fff;border:0;border-radius:11px;padding:8px 12px;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap;transition:transform .18s var(--spring)}.mini:active{transform:scale(.9)}.checkout{padding:12px 14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}.ttl{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:var(--muted)}.ttl b{font-size:22px;color:var(--txt);font-weight:900;transition:transform .3s var(--spring)}.ttl b.pop{animation:bump .45s var(--spring)}.hint{color:var(--muted);font-size:13px;text-align:center;padding:36px 12px;line-height:1.5}@media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition-duration:.01ms!important}}.finale{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;min-height:100%;}.calc{display:flex;flex-direction:column;align-items:center;gap:18px;}.calc i{display:inline-block;width:9px;height:9px;margin:0 3px;border-radius:50%;background:var(--green);animation:bounce 1s infinite ease-in-out;}.calc i:nth-child(2){animation-delay:.16s;}.calc i:nth-child(3){animation-delay:.32s;}.calc p{font-size:15px;color:var(--muted);margin:0;}@keyframes bounce{0%,80%,100%{transform:scale(.7);opacity:.5;}40%{transform:scale(1);opacity:1;}}.result{animation:resultIn .5s cubic-bezier(.2,.9,.3,1.2);}@keyframes resultIn{from{opacity:0;transform:translateY(18px) scale(.96);}}.result .kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);}.result h2{font-size:27px;line-height:1.2;margin:8px 0 10px;text-wrap:balance;}.result .body{font-size:15px;line-height:1.5;color:#4B5563;margin:0 0 22px;max-width:300px;}.result .bonus{padding:18px 26px;margin-bottom:22px;border-radius:18px;background:linear-gradient(135deg,#EAF9F0,#D8F3E4);border:1px solid rgba(47,191,113,.28);}.result .bonus span{display:block;font-size:12px;color:#4B7A5E;margin-bottom:4px;}.result .bonus b{font-size:30px;color:#1B7F4E;}.result small{display:block;font-size:12px;color:#9AA3AE;margin-top:10px;}.btn-ghost{margin-top:18px;background:none;border:0;font-size:14px;color:var(--muted);text-decoration:underline;padding:8px;cursor:pointer;}@media (prefers-reduced-motion:reduce){.calc i,.result{animation:none !important;}}.ph img{width:100%;height:100%;object-fit:contain !important;pointer-events:none !important;}@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.8);opacity:0.4;}}.calc i{animation:pulseDot 1.4s ease-in-out infinite !important;}.tabbar{display:none !important;}.deckwrap{height:calc(100vh - 180px) !important;}</style>
 </head>
 <body>
-
 <div class="app">
-
-  <!-- ================= TOPBAR ================= -->
   <header class="topbar">
-    <div class="addr">
-      улица Паперника, 9
-      <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-    </div>
-    <button class="bell" aria-label="Уведомления">
-      🔔<span class="dot">4</span>
-    </button>
+    <div class="addr">улица Паперника, 9<svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+    <button class="bell">🔔<span class="dot">4</span></button>
   </header>
-
   <div class="subhead">
-    <span id="progress">Просмотрено 0 из 0</span>
+    <span id="progress">Просмотрено 0 из 10</span>
     <span class="pill" id="savedPill">Выгода 0 ₽</span>
   </div>
-
   <div class="progbar"><i id="progFill"></i></div>
-
-  <!-- ================= DECK ================= -->
   <main class="deckwrap">
     <div id="deck"></div>
-
     <div class="empty" id="empty">
       <div class="emptyIco">🛍️</div>
       <h2>Это все товары!</h2>
-      <p id="emptyTxt">В корзине 0 товаров</p>
+      <p id="emptyTxt"></p>
       <button class="btn-green" id="restart">Смотреть заново</button>
     </div>
   </main>
-
-  <!-- ================= CONTROLS ================= -->
   <div class="controls">
-    <button class="cbtn no" id="btnNo" aria-label="Не нравится">
-      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-
-    <button class="cbtn undo" id="btnUndo" aria-label="Вернуть">
-      <svg viewBox="0 0 24 24"><path d="M3 9h11a5 5 0 0 1 0 10H8"/><path d="M7 5L3 9l4 4"/></svg>
-    </button>
-
-    <button class="cbtn yes" id="btnYes" aria-label="В корзину">
-      <svg viewBox="0 0 24 24">
-        <circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/>
-        <path d="M2 3h3l2.6 11.5h11L21 7H6"/>
-      </svg>
-    </button>
+    <button class="cbtn no" id="btnNo"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="cbtn undo" id="btnUndo"><svg viewBox="0 0 24 24"><path d="M3 9h11a5 5 0 0 1 0 10H8"/><path d="M7 5L3 9l4 4"/></svg></button>
+    <button class="cbtn yes" id="btnYes"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.6 11.5h11L21 7H6"/></svg></button>
   </div>
-
-  <!-- ================= TABBAR ================= -->
-  <nav class="tabbar">
-    <button class="tb active"><span>🍀</span>Главная</button>
-    <button class="tb"><span>🔲</span>Каталог</button>
-
-    <button class="tb cart" id="openCart">
-      <span class="cartico">🛒<i class="cnt" id="cartCnt">0</i></span>
-      <b id="cartSum">0 ₽</b>
-    </button>
-
-    <button class="tb" id="btnInfo">
-      <span class="cartico">🍊<i class="cnt" id="likeDot">0</i></span>
-      Апельсин
-    </button>
-
-    <button class="tb"><span>👤</span>Профиль</button>
-  </nav>
-
 </div>
-
-<!-- ================= SHEET ================= -->
 <div class="overlay" id="overlay"></div>
-
 <aside class="sheet" id="sheet">
   <div class="grab"></div>
-
   <div class="tabs">
     <button class="tab active" data-tab="cart">🛒 Корзина</button>
     <button class="tab" data-tab="reco">✨ Вам понравится</button>
   </div>
-
   <div class="list" id="list"></div>
-
   <div class="checkout">
     <div class="ttl">Итого <b id="total">0 ₽</b></div>
     <button class="btn-green wide" id="btnPay">Оформить заказ</button>
   </div>
 </aside>
+<div id="fx"></div>
+<script>const PRODUCTS = [
+  {
+    id: 1, n: "Стейк Рибай мраморный", b: "300 г", p: 899, o: 1290, d: "Четыре минуты на сторону — и всё",
+    e: "🥩", c: "#FFE2E6", r: 4.8, t: ['meat', 'gourmet'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23FFE2E6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🥩%3C/text%3E%3C/svg%3E",
+    tag: "Суббота, 20:00", hook: "Четыре минуты на сторону — и всё", why: "Мраморность 3+. Соль, перец, чугун", taste: ['meat', 'weekend-feast', 'gourmet']
+  },
+  {
+    id: 2, n: "Сыр Бри President 60%", b: "President · 125 г", p: 289, o: 379, d: "Течёт, если дать постоять 20 минут",
+    e: "🧀", c: "#FFF7DC", r: 4.9, t: ['dairy', 'gourmet'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23FFF7DC'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🧀%3C/text%3E%3C/svg%3E",
+    tag: "Пока никто не видит", hook: "Течёт, если дать постоять 20 минут", why: "Достаньте из холодильника заранее", taste: ['cheese', 'wine-night', 'gourmet']
+  },
+  {
+    id: 3, n: "Авокадо Хасс спелое", b: "2 шт", p: 219, o: 249, d: "Мягкое. Не придётся ждать три дня",
+    e: "🥑", c: "#EAF7CE", r: 4.5, t: ['fruit', 'healthy'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23EAF7CE'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🥑%3C/text%3E%3C/svg%3E",
+    tag: "Готово сегодня", hook: "Мягкое. Не придётся ждать три дня", why: "Отобрано по спелости", taste: ['healthy', 'breakfast', 'veg']
+  },
+  {
+    id: 4, n: "Лосось стейк", b: "Магуро · 300 г", p: 649, o: 849, d: "Розовый внутри, хрустящий сверху",
+    e: "🐟", c: "#FFEADE", r: 4.8, t: ['fish', 'healthy', 'gourmet'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23FFEADE'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🐟%3C/text%3E%3C/svg%3E",
+    tag: "Быстрый ужин", hook: "Розовый внутри, хрустящий сверху", why: "12 минут в духовке при 200°", taste: ['fish', 'healthy', 'gourmet']
+  },
+  {
+    id: 5, n: "Виноград Шайн Мускат", b: "500 г", p: 449, o: 599, d: "Хрустит и пахнет мускатом",
+    e: "🍇", c: "#F2E8FF", r: 4.7, t: ['fruit', 'sweet'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23F2E8FF'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🍇%3C/text%3E%3C/svg%3E",
+    tag: "Вместо конфет", hook: "Хрустит и пахнет мускатом", why: "Без косточек. Уходит за вечер", taste: ['fruit', 'sweet-tooth', 'healthy']
+  },
+  {
+    id: 6, n: "Хачапури по-аджарски", b: "250 г", p: 249, o: 319, d: "Сыр тянется на пол-метра",
+    e: "🥖", c: "#FDEFD6", r: 4.7, t: ['bakery', 'comfort'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23FDEFD6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🥖%3C/text%3E%3C/svg%3E",
+    tag: "Ужин без готовки", hook: "Сыр тянется на пол-метра", why: "8 минут в духовке", taste: ['cheese', 'comfort', 'quick']
+  },
+  {
+    id: 7, n: "Кофе Lavazza в зёрнах", b: "Lavazza · 1 кг", p: 1290, o: 1790, d: "Кухня пахнет раньше",
+    e: "☕", c: "#EFE2D6", r: 4.9, t: ['drink'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23EFE2D6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E☕%3C/text%3E%3C/svg%3E",
+    tag: "Утренний ритуал", hook: "Кухня пахнет раньше", why: "Арабика 100%", taste: ['coffee', 'breakfast', 'ritual']
+  },
+  {
+    id: 8, n: "Шоколад Lindt 70%", b: "Lindt · 100 г", p: 249, o: 329, d: "Ломается со щелчком",
+    e: "🍫", c: "#F0E4F7", r: 4.9, t: ['sweet'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23F0E4F7'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🍫%3C/text%3E%3C/svg%3E",
+    tag: "Два кубика", hook: "Ломается со щелчком", why: "70% — горчит ровно настолько", taste: ['sweet-tooth', 'gourmet', 'evening']
+  },
+  {
+    id: 9, n: "Творог Простоквашино 5%", b: "220 г", p: 89, o: 115, d: "Не превращается в кашу",
+    e: "🥣", c: "#F5F7FA", r: 4.8, t: ['dairy', 'healthy'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23F5F7FA'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🥣%3C/text%3E%3C/svg%3E",
+    tag: "На завтрак", hook: "Не превращается в кашу", why: "Держит форму в сырниках", taste: ['breakfast', 'protein', 'homecook']
+  },
+  {
+    id: 10, n: "Мороженое Movenpick", b: "500 мл", p: 549, o: 699, d: "Настоящая ваниль",
+    e: "🍨", c: "#F3F6FF", r: 4.8, t: ['sweet', 'dairy'],
+    img: "data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='600' fill='%23F3F6FF'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='180'%3E🍨%3C/text%3E%3C/svg%3E",
+    tag: "Тайно, ночью", hook: "Настоящая ваниль", why: "Сливочное, не молочное", taste: ['sweet-tooth', 'comfort', 'evening']
+  },
+];
 
-<!-- ================= FX LAYER ================= -->
-<div id="fx" aria-hidden="true"></div>
+const TASTE_PROFILES = {
+  cheese: { title: 'Сырный человек', line: 'Вы не проходите мимо сыра. Мы запомнили.', emoji: '🧀' },
+  meat: { title: 'Хищник', line: 'Овощи — это гарнир. Мы поняли.', emoji: '🥩' },
+  fish: { title: 'Рыбный день, но вкусно', line: 'Вы выбираете то, что готовится быстро.', emoji: '🐟' },
+  healthy: { title: 'Осознанная корзина', line: 'Свежее, простое, без лишнего.', emoji: '🥗' },
+  'sweet-tooth': { title: 'Сладкое — не слабость', line: 'Вы честны с собой.', emoji: '🍫' },
+  coffee: { title: 'Сначала кофе', line: 'До первой чашки вас не существует.', emoji: '☕' },
+  'wine-night': { title: 'Вечер с бокалом', line: 'Вы умеете собрать доску.', emoji: '🍷' },
+  comfort: { title: 'Комфорт важнее', line: 'Вкусно и без готовки.', emoji: '🛋️' },
+  breakfast: { title: 'Завтрак — главный', line: 'День начинается правильно.', emoji: '🌅' },
+  'weekend-feast': { title: 'Мастер выходных', line: 'Суббота — по-серьёзному.', emoji: '🎉' },
+  gourmet: { title: 'Тонкий вкус', line: 'Вы берёте не самое дешёвое.', emoji: '✨' },
+  quick: { title: 'Быстро и точка', line: 'Меньше 15 минут или мимо.', emoji: '⚡' },
+  protein: { title: 'Белковая база', line: 'Вы строите тело.', emoji: '💪' },
+  veg: { title: 'Овощной путь', line: 'Зелень и свежесть.', emoji: '🥬' },
+  homecook: { title: 'Повар дома', line: 'Вы готовите сами.', emoji: '👨‍🍳' },
+  ritual: { title: 'Ритуалы важны', line: 'Вы цените повторяемость.', emoji: '🕯️' },
+  snack: { title: 'Снэк-стратег', line: 'Перекус — искусство.', emoji: '🍿' },
+  evening: { title: 'Вечерний человек', line: 'После 20:00 магия.', emoji: '🌙' }
+};
+</script>
+<script>/* ============================================================
+   SwipeEat — логика + анимации
+   ============================================================ */
 
-<script src="products.js"></script>
-<script src="app.js"></script>
+/* ================== СОСТОЯНИЕ ================== */
+const S = {
+  queue: [],      // очередь id
+  cart: {},       // {id: qty}
+  liked: [],      // id лайкнутых
+  taste: {},      // {tag: score}
+  history: []     // {id, dir} для undo
+};
+
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const byId = id => PRODUCTS.find(p => p.id === id);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ================== ФОРМАТ ЦЕН ================== */
+const money = v => {
+  const [r, k] = v.toFixed(2).split('.');
+  return `${r.replace(/\B(?=(\d{3})+(?!\d))/g,' ')}<span class="kop">,${k} ₽</span>`;
+};
+const plain = v => v.toFixed(2).replace('.', ',') + ' ₽';
+
+/* ================== ХРАНИЛИЩЕ ================== */
+function save(){
+  localStorage.setItem('swipeEat', JSON.stringify({
+    cart:S.cart, liked:S.liked, taste:S.taste, queue:S.queue, history:S.history
+  }));
+}
+function load(){
+  try{
+    const d = JSON.parse(localStorage.getItem('swipeEat'));
+    if(d && Array.isArray(d.queue) && d.queue.length) Object.assign(S, d);
+  }catch(e){}
+}
+
+/* ================== ОЧЕРЕДЬ / ВКУС ================== */
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function initQueue(){ S.queue = shuffle(PRODUCTS.map(p=>p.id)); }
+function score(p){ return p.t.reduce((s,t)=> s + (S.taste[t]||0), 0); }
+
+/* похожее — ближе к началу, но верхние 2 карты не трогаем (чтоб не мигало) */
+function resort(){
+  const head = S.queue.slice(0,2);
+  const tail = S.queue.slice(2)
+    .map(byId).sort((a,b)=> score(b)-score(a)).map(p=>p.id);
+  S.queue = [...head, ...tail];
+}
+
+/* ================== ТАКТИЛЬНАЯ ОТДАЧА ================== */
+const buzz = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} };
+
+
+/* ============================================================
+   FINALE
+   ============================================================ */
+
+const DEEPLINK = 'tsxapp://app/personal_offers_list';
+const CALC_LINES = [
+  'Анализируем ваши выборы…',
+  'Сверяем с историей покупок…',
+  'Подбираем персональные цены…'
+];
+
+const FINALE_VARIANTS = {
+  A: {
+    kicker: '✓ Готово',
+    title: 'Мы поняли ваш вкус',
+    body: 'Собрали {n} персональных предложений — только то, что вы правда берёте.',
+    bonusLabel: 'Ваша выгода в этом месяце',
+    bonusValue: 'до {sum} ₽',
+    cta: 'Забрать скидки',
+    sub: 'Действуют 7 дней'
+  }
+};
+
+function computeTasteProfile(likedProducts) {
+  const counts = {};
+  likedProducts.forEach(p => {
+    (p.taste || []).forEach(t => { counts[t] = (counts[t] || 0) + 1; });
+  });
+  const top = Object.entries(counts)
+    .filter(([tag]) => TASTE_PROFILES[tag])
+    .sort((a, b) => b[1] - a[1])[0];
+  if (!top) return { title: 'Свой вкус', line: 'Вы не любите шаблоны.', emoji: '✨' };
+  return TASTE_PROFILES[top[0]];
+}
+
+function fill(tpl, vars) {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => (k in vars ? vars[k] : ''));
+}
+
+function renderFinale({ liked, savedSum, variant = 'A' }) {
+  const el = $('#empty');
+  if (!el) return;
+
+  const profile = computeTasteProfile(liked);
+  const v = FINALE_VARIANTS[variant];
+  const vars = {
+    n: liked.length,
+    sum: Math.round(savedSum),
+    profileTitle: profile.title,
+    profileLine: profile.line,
+    profileEmoji: profile.emoji || '✨'
+  };
+
+  el.innerHTML = `
+    <div class="finale">
+      <div class="calc" id="calc">
+        <i></i><i></i><i></i>
+        <p id="calcLine">${CALC_LINES[0]}</p>
+      </div>
+      <div class="result" id="result" style="display:none">
+        <span class="kicker">${v.kicker}</span>
+        <div style="font-size: 48px; margin: 8px 0;">${vars.profileEmoji}</div>
+        <h2>${vars.profileTitle}</h2>
+        <p class="body">${vars.profileLine}</p>
+        <div class="bonus">
+          <span>${v.bonusLabel}</span>
+          <b>${fill(v.bonusValue, vars)}</b>
+        </div>
+        <button class="btn-green wide" id="goOffers">${v.cta}</button>
+        <small>${v.sub}</small>
+        <button class="btn-ghost" id="restartFinale">Свайпнуть ещё</button>
+      </div>
+    </div>`;
+
+  let i = 0;
+  const lineEl = $('#calcLine');
+  const tick = setInterval(() => {
+    i++;
+    if (i < CALC_LINES.length) { 
+      lineEl.textContent = CALC_LINES[i];
+      return; 
+    }
+    clearInterval(tick);
+    $('#calc').style.display = 'none';
+    $('#result').style.display = 'block';
+    buzz([12, 40, 18]);
+  }, 1400);
+
+  setTimeout(() => {
+    const goBtn = $('#goOffers');
+    const restartBtn = $('#restartFinale');
+    if(goBtn) goBtn.onclick = () => {
+      const url = `${DEEPLINK}?source=swipe_game&liked_ids=${liked.map(p => p.id).join(',')}&saved_sum=${savedSum}&taste_profile=${encodeURIComponent(profile.title)}`;
+      if (window.TSXBridge?.openDeeplink) window.TSXBridge.openDeeplink(url);
+      else if (window.webkit?.messageHandlers?.tsxapp) window.webkit.messageHandlers.tsxapp.postMessage({action:'openDeeplink',url});
+      else if (window.AndroidBridge?.openDeeplink) window.AndroidBridge.openDeeplink(url);
+      else window.location.href = url;
+    };
+    if(restartBtn) restartBtn.onclick = () => { 
+      S.liked = [];
+      S.history = [];
+      initQueue(); 
+      animateTop = true; 
+      render(); 
+    };
+  }, 100);
+}
+
+/* ================== РЕНДЕР КАРТОЧЕК ================== */
+const deck = $('#deck');
+const fx   = $('#fx');
+
+function cardHTML(p, isReco){
+  const off = p.o ? Math.round((1 - p.p/p.o)*100) : 0;
+  const media = p.img ? `<img src="${p.img}" alt="">` : `<div class="emoji">${p.e}</div>`;
+  return `
+    <div class="tint l"></div><div class="tint n"></div>
+    <div class="act l"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.6 11.5h11L21 7H6"/></svg></div>
+    <div class="act n"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
+    ${off ? `<div class="disc">−${off}%</div>` : ''}
+    ${isReco ? `<div class="reco">✨ Вам понравится</div>` : ''}
+    <div class="imgwrap">
+      <div class="ph" style="background:${p.c}">${media}</div>
+    </div>
+    <div class="meta">
+      <div class="rate"><span class="st">★</span>${p.r}<span class="unit">${p.b}</span></div>
+      <div class="name">${p.n}</div>
+      <div class="desc">${p.d}</div>
+      <div class="prow">
+        <div class="price ${p.o?'sale':''}">${money(p.p)}</div>
+        ${p.o ? `<div class="old">${plain(p.o)}</div>` : ''}
+        <button class="addbtn" data-add="${p.id}" aria-label="В корзину">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>`;
+}
+
+let animateTop = false;   // анимировать появление верхней карты
+let undoTop    = false;   // верхняя карта «влетает» назад
+
+function render(){
+  deck.innerHTML = '';
+  const ids = S.queue.slice(0,3).reverse();   // сначала дальняя
+
+  ids.forEach((id,i)=>{
+    const p  = byId(id);
+    const isTop = (i === ids.length-1);
+    const el = document.createElement('div');
+    el.className = 'card' + (isTop ? ' top' : '');
+    el.dataset.id  = id;
+    el.dataset.pos = String(ids.length-1-i);
+    el.innerHTML   = cardHTML(p, isTop && score(p) >= 2);
+
+    if(isTop && !RM){
+      if(undoTop) el.classList.add('undoIn');
+      else if(animateTop) el.classList.add('in');
+    }
+    deck.appendChild(el);
+    if(isTop) attachDrag(el);
+  });
+
+  animateTop = undoTop = false;
+
+  const done = S.queue.length === 0;
+  $('#empty').classList.toggle('show', done);
+  if(done){
+    renderFinale({ 
+      liked: S.liked.map(byId).filter(Boolean), 
+      savedSum: savedTotal(),
+      variant: 'A'
+    });
+  }
+
+  updateUI();
+}
+
+/* ================== СВАЙП: ЖЕСТ ================== */
+const TH = 92;   // порог решения, px
+
+function attachDrag(el){
+  const TL = el.querySelector('.tint.l'), TN = el.querySelector('.tint.n');
+  const AL = el.querySelector('.act.l'),  AN = el.querySelector('.act.n');
+  const btnY = $('#btnYes'), btnN = $('#btnNo');
+
+  let sx=0, sy=0, dx=0, dy=0, drag=false, t0=0, lastX=0, vx=0;
+
+  const paint = ()=>{
+    const k = clamp(dx/TH, -1, 1);
+    el.style.transform =
+      `translate(${dx}px,${dy*.35}px) rotate(${dx/20}deg) scale(${1-Math.abs(k)*.02})`;
+    TL.style.opacity = clamp(k,0,1);
+    TN.style.opacity = clamp(-k,0,1);
+    AL.style.opacity = clamp(k*1.25,0,1);
+    AN.style.opacity = clamp(-k*1.25,0,1);
+    AL.style.transform = `scale(${.35+clamp(k,0,1)*.75}) rotate(${-12*clamp(k,0,1)}deg)`;
+    AN.style.transform = `scale(${.35+clamp(-k,0,1)*.75}) rotate(${12*clamp(-k,0,1)}deg)`;
+    btnY.classList.toggle('hot', k > .55);
+    btnN.classList.toggle('hot', k < -.55);
+    /* вторая карта подтягивается */
+    const next = el.previousElementSibling;
+    if(next){
+      const t = Math.abs(k);
+      next.style.transform = `scale(${.945+t*.055}) translateY(${12-t*12}px)`;
+      next.style.opacity = .96 + t*.04;
+    }
+  };
+
+  el.addEventListener('pointerdown', e=>{
+    if(e.target.closest('[data-add]')) return;
+    drag = true; sx = lastX = e.clientX; sy = e.clientY; t0 = performance.now();
+    el.setPointerCapture(e.pointerId);
+    el.classList.add('dragging');
+    el.classList.remove('settle','snap','in','undoIn');
+    el.style.transition = 'none';
+  });
+
+  el.addEventListener('pointermove', e=>{
+    if(!drag) return;
+    dx = e.clientX - sx; dy = e.clientY - sy;
+    const dt = performance.now() - t0;
+    if(dt > 16){ vx = (e.clientX - lastX)/dt*16; lastX = e.clientX; t0 = performance.now(); }
+    paint();
+    if(Math.abs(dx) > TH && Math.abs(dx) - Math.abs(dx)%TH === TH) buzz(8);
+  });
+
+  const end = ()=>{
+    if(!drag) return;
+    drag = false;
+    el.classList.remove('dragging');
+    btnY.classList.remove('hot'); btnN.classList.remove('hot');
+    el.style.transition = '';
+
+    const go = Math.abs(dx) > TH || Math.abs(vx) > 11;
+    if(go){
+      fly(el, (dx || vx) > 0 ? 1 : -1, vx);
+    }else{
+      el.classList.add('snap');
+      el.style.transform = '';
+      [TL,TN,AL,AN].forEach(n=> n.style.opacity = 0);
+      const next = el.previousElementSibling;
+      if(next){
+        next.classList.add('settle');
+        next.style.transform = 'scale(.945) translateY(12px)';
+        next.style.opacity = '';
+      }
+    }
+    dx = dy = vx = 0;
+  };
+  el.addEventListener('pointerup', end);
+  el.addEventListener('pointercancel', end);
+}
+
+/* ================== СВАЙП: ВЫЛЕТ ================== */
+let busy = false;
+
+function fly(el, dir, vx=0){
+  if(busy) return; busy = true;
+  const id = +el.dataset.id;
+  el.classList.add('fly');
+  el.style.transform =
+    `translate(${dir*(window.innerWidth+240)}px,${60+Math.abs(vx)*6}px) rotate(${dir*38}deg)`;
+  el.style.opacity = 0;
+
+  const next = el.previousElementSibling;
+  if(next){ next.classList.add('settle'); next.style.transform=''; next.style.opacity=''; }
+
+  if(dir > 0){ burst(el); flyToCart(el, byId(id)); buzz(22); }
+  else buzz(10);
+
+  setTimeout(()=>{ busy=false; decide(id, dir); }, RM?0:190);
+}
+
+function swipe(dir){
+  const top = deck.querySelector('.card.top');
+  if(top && !busy){
+    $(dir>0 ? '#btnYes' : '#btnNo').classList.add('kick');
+    setTimeout(()=> $$('.cbtn').forEach(b=>b.classList.remove('kick')), 420);
+    fly(top, dir);
+  }
+}
+
+/* ================== РЕШЕНИЕ / UNDO ================== */
+function decide(id, dir){
+  const p = byId(id);
+  S.queue = S.queue.filter(x => x !== id);
+  S.history.push({id, dir});
+
+  if(dir > 0){
+    S.cart[id] = (S.cart[id]||0) + 1;
+    if(!S.liked.includes(id)) S.liked.push(id);
+    p.t.forEach(t => S.taste[t] = (S.taste[t]||0) + 2);
+    resort();
+  }else{
+    p.t.forEach(t => S.taste[t] = (S.taste[t]||0) - .5);
+  }
+  animateTop = true;
+  save(); render();
+  if(dir > 0){ pulseCart(); bumpPill(); }
+}
+
+function undo(){
+  const h = S.history.pop();
+  if(!h) return;
+  const p = byId(h.id);
+  if(h.dir > 0){
+    if(S.cart[h.id] > 1) S.cart[h.id]--; else delete S.cart[h.id];
+    S.liked = S.liked.filter(x => x !== h.id);
+    p.t.forEach(t => S.taste[t] = (S.taste[t]||0) - 2);
+  }else{
+    p.t.forEach(t => S.taste[t] = (S.taste[t]||0) + .5);
+  }
+  S.queue.unshift(h.id);
+  undoTop = true;
+  buzz(14);
+  save(); render();
+}
+
+/* ================== ЭФФЕКТЫ ================== */
+/* конфетти из центра карточки */
+function burst(el){
+  if(RM) return;
+  const r = el.getBoundingClientRect();
+  const cx = r.left + r.width/2, cy = r.top + r.height/2;
+  const set = ['🎉','✨','🥕','🍏','⭐','🟢','🍋','💚'];
+  for(let i=0;i<16;i++){
+    const s = document.createElement('div');
+    s.className = 'pt';
+    s.textContent = set[i % set.length];
+    s.style.left = cx+'px'; s.style.top = cy+'px';
+    s.style.fontSize = (13 + Math.random()*16)+'px';
+    fx.appendChild(s);
+    const a = Math.random()*Math.PI*2, d = 90 + Math.random()*190;
+    s.animate([
+      {transform:'translate(-50%,-50%) scale(.3) rotate(0deg)', opacity:1},
+      {transform:`translate(${Math.cos(a)*d-20}px,${Math.sin(a)*d-40}px) scale(1.1) rotate(${(Math.random()*2-1)*420}deg)`, opacity:1, offset:.55},
+      {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d+190}px) scale(.55) rotate(${(Math.random()*2-1)*640}deg)`, opacity:0}
+    ],{duration:900+Math.random()*500, easing:'cubic-bezier(.2,.7,.3,1)'})
+     .onfinish = ()=> s.remove();
+  }
+}
+
+/* товар «улетает» в иконку корзины */
+function flyToCart(el, p){
+  if(RM) return;
+  const ph = el.querySelector('.ph');
+  const target = $('#openCart') || $('.tb.cart');
+  if(!ph || !target) return;
+  const a = ph.getBoundingClientRect(), b = target.getBoundingClientRect();
+
+  const f = document.createElement('div');
+  f.className = 'flyer';
+  f.style.background = p.c;
+  f.style.left = (a.left + a.width/2 - 27)+'px';
+  f.style.top  = (a.top  + a.height/2 - 27)+'px';
+  f.innerHTML  = p.img ? `<img src="${p.img}">` : p.e;
+  document.body.appendChild(f);
+
+  const dx = (b.left + b.width/2) - (a.left + a.width/2);
+  const dy = (b.top  + b.height/2) - (a.top + a.height/2);
+
+  f.animate([
+    {transform:'translate(0,0) scale(1.15)', opacity:1},
+    {transform:`translate(${dx*.55}px,${dy*.32 - 130}px) scale(.85)`, opacity:1, offset:.55},
+    {transform:`translate(${dx}px,${dy}px) scale(.18)`, opacity:.2}
+  ],{duration:620, easing:'cubic-bezier(.35,.05,.4,1)'})
+   .onfinish = ()=>{ f.remove(); pulseCart(); };
+}
+
+function pulseCart(){
+  const ic = $('.cartico'), c = $('#cartCnt');
+  if(ic){ ic.classList.remove('jump'); void ic.offsetWidth; ic.classList.add('jump'); }
+  if(c){ c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); }
+}
+function bumpPill(){
+  const p = $('#savedPill');
+  if(!p) return;
+  p.classList.remove('bump'); void p.offsetWidth; p.classList.add('bump');
+}
+/* волна от кнопки */
+function ripple(btn){
+  if(RM) return;
+  const r = btn.getBoundingClientRect();
+  const d = document.createElement('div');
+  d.className = 'ripple';
+  d.style.width = d.style.height = r.width*3+'px';
+  d.style.left = (r.left + r.width/2 - r.width*1.5)+'px';
+  d.style.top  = (r.top  + r.height/2 - r.width*1.5)+'px';
+  document.body.appendChild(d);
+  d.animate([{transform:'scale(.2)',opacity:.9},{transform:'scale(1)',opacity:0}],
+            {duration:520, easing:'ease-out'}).onfinish = ()=> d.remove();
+}
+
+/* ================== КОРЗИНА: СЧЁТ ================== */
+const cartCount = () => Object.values(S.cart).reduce((a,b)=>a+b,0);
+const cartTotal = () => Object.entries(S.cart).reduce((s,[id,q])=> s + byId(+id).p*q, 0);
+const savedTotal= () => Object.entries(S.cart).reduce((s,[id,q])=>{
+  const p = byId(+id); return s + (p.o ? (p.o-p.p)*q : 0);
+},0);
+
+let prevTotal = -1;
+function updateUI(){
+  const cnt = cartCount(), tot = cartTotal();
+  const set = (sel,val,html)=>{ const n=$(sel); if(n){ html? n.innerHTML=val : n.textContent=val; } };
+
+  set('#cartCnt', cnt);
+  set('#cartSum', Math.round(tot)+' ₽');
+  set('#likeDot', S.liked.length);
+  set('#total', money(tot), true);
+  set('#savedPill', 'Выгода '+Math.round(savedTotal())+' ₽');
+
+  const seen = PRODUCTS.length - S.queue.length;
+  set('#progress', `Просмотрено ${seen} из ${PRODUCTS.length}`);
+  const fill = $('#progFill');
+  if(fill) fill.style.width = (seen/PRODUCTS.length*100)+'%';
+
+  const t = $('#total');
+  if(t && prevTotal !== -1 && tot !== prevTotal){
+    t.classList.remove('pop'); void t.offsetWidth; t.classList.add('pop');
+  }
+  prevTotal = tot;
+}
+
+/* ================== СПИСОК В ШТОРКЕ ================== */
+function rowHTML(p, mode){
+  const q = S.cart[p.id] || 0;
+  const media = p.img ? `<img src="${p.img}">` : p.e;
+  const ctrl = mode === 'cart'
+    ? `<div class="qty">
+         <button data-minus="${p.id}">−</button><span>${q}</span>
+         <button data-plus="${p.id}">+</button></div>`
+    : `<button class="mini" data-plus="${p.id}">${q?'Ещё':'В корзину'}</button>`;
+  return `<div class="row" data-row="${p.id}" style="animation-delay:${Math.random()*.12}s">
+      <div class="thumb" style="background:${p.c}">${media}</div>
+      <div class="rn"><b>${p.n}</b><small>${p.b}</small></div>
+      <div class="rp">${plain(p.p)}</div>${ctrl}
+    </div>`;
+}
+
+let tab = 'cart';
+function renderList(){
+  const list = $('#list');
+  if(!list) return;
+  if(tab === 'cart'){
+    const ids = Object.keys(S.cart).map(Number);
+    list.innerHTML = ids.length
+      ? ids.map(id=> rowHTML(byId(id),'cart')).join('')
+      : `<div class="hint">Корзина пуста.<br>Свайпай карточки вправо 👉</div>`;
+  }else{
+    const recs = PRODUCTS.filter(p=> !S.cart[p.id])
+      .map(p=>({p,s:score(p)})).sort((a,b)=> b.s-a.s).slice(0,10).map(x=>x.p);
+    list.innerHTML = S.liked.length
+      ? recs.map(p=> rowHTML(p,'reco')).join('')
+      : `<div class="hint">Лайкни пару товаров —<br>и мы подберём похожие ✨</div>`;
+  }
+  updateUI();
+}
+
+/* ================== ШТОРКА ================== */
+function openSheet(t){
+  tab = t || tab;
+  $$('.tab').forEach(b=> b.classList.toggle('active', b.dataset.tab === tab));
+  renderList();
+  $('#sheet').classList.add('show');
+  $('#overlay').classList.add('show');
+}
+function closeSheet(){
+  $('#sheet').classList.remove('show');
+  $('#overlay').classList.remove('show');
+}
+
+/* ================== СОБЫТИЯ ================== */
+const on = (sel, ev, fn) => { const n = $(sel); if(n) n.addEventListener(ev, fn); };
+
+on('#btnNo','click',   e => { ripple(e.currentTarget); swipe(-1); });
+on('#btnYes','click',  e => { ripple(e.currentTarget); swipe(1);  });
+on('#btnUndo','click', undo);
+
+on('#openCart','click', () => openSheet('cart'));
+on('#btnInfo','click',  () => openSheet('reco'));
+on('#overlay','click',  closeSheet);
+
+on('#restart','click', () => {
+  initQueue(); S.history = []; animateTop = true; save(); render();
+});
+
+on('#btnPay','click', e => {
+  if(!cartCount()) return;
+  ripple(e.currentTarget);
+  buzz(30);
+  alert('Заказ на ' + plain(cartTotal()) + ' оформлен 🎉\nЭто демо — оплата не подключена.');
+});
+
+$$('.tab').forEach(b => b.addEventListener('click', () => openSheet(b.dataset.tab)));
+
+/* «+» на карточке — добавить, не свайпая */
+deck.addEventListener('click', e => {
+  if(e.target.closest('[data-add]')) swipe(1);
+});
+
+/* +/− в списке шторки */
+on('#list','click', e => {
+  const plus  = e.target.closest('[data-plus]');
+  const minus = e.target.closest('[data-minus]');
+  if(!plus && !minus) return;
+
+  if(plus){
+    const id = +plus.dataset.plus;
+    S.cart[id] = (S.cart[id] || 0) + 1;
+    if(!S.liked.includes(id)) S.liked.push(id);
+    byId(id).t.forEach(t => S.taste[t] = (S.taste[t] || 0) + 1);
+    S.queue = S.queue.filter(x => x !== id);
+    buzz(12); pulseCart();
+  }
+
+  if(minus){
+    const id = +minus.dataset.minus;
+    if(S.cart[id] > 1) S.cart[id]--;
+    else {
+      delete S.cart[id];
+      const row = $(`[data-row="${id}"]`);
+      if(row && !RM){
+        row.classList.add('out');
+        setTimeout(() => { save(); renderList(); render(); }, 280);
+        return;
+      }
+    }
+    buzz(8);
+  }
+
+  save(); renderList(); render();
+});
+
+/* клавиатура (десктоп) */
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight') swipe(1);
+  if(e.key === 'ArrowLeft')  swipe(-1);
+  if(e.key === 'ArrowDown')  undo();
+  if(e.key === 'Escape')     closeSheet();
+});
+
+/* свайп вниз по шторке — закрыть */
+(function(){
+  const sh = $('#sheet'); if(!sh) return;
+  let y0 = null;
+  sh.addEventListener('touchstart', e => { y0 = e.touches[0].clientY; }, {passive:true});
+  sh.addEventListener('touchmove', e => {
+    if(y0 === null) return;
+    const dy = e.touches[0].clientY - y0;
+    if(dy > 90 && $('#list').scrollTop <= 0){ closeSheet(); y0 = null; }
+  }, {passive:true});
+  sh.addEventListener('touchend', () => y0 = null);
+})();
+
+/* запрет зума двойным тапом */
+let lastTap = 0;
+document.addEventListener('touchend', e => {
+  const now = Date.now();
+  if(now - lastTap < 300) e.preventDefault();
+  lastTap = now;
+}, {passive:false});
+
+/* ================== СТАРТ ================== */
+load();
+if(!S.queue.length) initQueue();
+animateTop = true;
+render();</script>
 </body>
 </html>
